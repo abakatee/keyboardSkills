@@ -1,0 +1,45 @@
+body{
+    
+}
+
+.drop{
+    z-index: 999;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #ffffff 100%);
+	width:1px;
+	height:20px;
+	position: absolute;
+    animation: fall 1s linear ;
+	-webkit-animation: fall 1s linear ;
+  -moz-animation: fall 1s linear ;
+  
+
+  
+}
+
+@keyframes fall{
+    0%{top: 0px;}
+	100% {top: 100%;}
+}
+
+@-webkit-keyframes fall {
+    0%{top: 0px;}
+	100% {top: 100%;}
+}
+@-moz-keyframes fall {
+    0%{top: 0px;}
+	100% {top: 100%;}
+}
+
+.main{
+    position: absolute;
+    width: 351px;
+    height: 95%;
+}
+.mainRight{
+    right: 0%;
+    top: 0%;
+    position: absolute;
+    width: 351px;
+    height: 95%;
+    
+}
