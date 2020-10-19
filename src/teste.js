@@ -1,4 +1,4 @@
-function handleMultiplier(){
-  return Math.floor(Math.random() * 5 + 2)
-}
-console.log(handleMultiplier())
+var a = 123
+a = a.toString()
+
+console.log(a[1])

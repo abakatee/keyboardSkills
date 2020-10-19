@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import Particle from 'react-particles-js'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Effects from './particles'
@@ -7,7 +6,6 @@ import Effects from './particles'
 
 
 function Mechanics(props) {
-    const testee = props.score
     const [character, setCharacter] = useState('X')
     const [multiplier, setMultiplier] = useState(0)
     const [isMultiplier, setIsMultiplier] = useState(false)
@@ -19,6 +17,7 @@ function Mechanics(props) {
     const finalRef = useRef(null)
     const listRef = useRef(null)
     const timerRef = useRef(null)
+    const scoreRef = useRef(null)
 
 
     const all = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -27,6 +26,7 @@ function Mechanics(props) {
     var currentActive = false
     var currentMultiplierNum = 0
     var currentMultiplier = 0
+    var currentCombo = 0
 
 
     function handleStart() {
@@ -44,7 +44,17 @@ function Mechanics(props) {
             
         }
     }
-    function handleGenerator(){
+    function handleGenerator(yes = false){
+        let num = currentCombo
+        num = num.toString()
+        if(parseInt(num[num.length-1])  === 9){
+            console.log('aqui')
+            currentChar = 'Space'
+            setCharacter(currentChar)
+            return
+        }
+
+
         currentChar = all[Math.floor(Math.random() * all.length)]
         setCharacter(currentChar)
         let n = Math.floor(Math.random() * 6)
@@ -55,14 +65,36 @@ function Mechanics(props) {
             setMultiplier(currentMultiplierNum)
             setIsMultiplier(currentMultiplier)
             console.log('multiplayer' + isMultiplier)
-    
         }
+        
     }
    
 
-
     function handleVerification(event) {
+         
+
         if(currentActive === true){
+         if(currentChar === 'Space' && event.key === " " ){
+           
+            setScore(score => score + 1)
+            setFinalScore(finalScore => finalScore + 1)
+            setCombo(combo => combo + 1)
+            currentCombo += 1
+            console.log(combo)
+            console.log(finalScore)
+            currentProgress += 23
+            setProgress(currentProgress)
+            handleGenerator(true)
+            return
+         }else if(currentChar === 'Space'){
+             setCombo(0)
+             currentCombo = 0
+             return
+         }
+             
+            
+
+
             if (event.key.toUpperCase() === currentChar) {
                 if(currentMultiplier){
                     console.log('chegou')
@@ -75,6 +107,7 @@ function Mechanics(props) {
                         currentMultiplier = false
                         setIsMultiplier(currentMultiplier)
                         setCombo(combo => combo + 1)
+                        currentCombo += 1
                         setScore(score => score + 1)
                         setFinalScore(finalScore => finalScore + 1)
                         handleGenerator()
@@ -86,12 +119,13 @@ function Mechanics(props) {
                 setScore(score => score + 1)
                 setFinalScore(finalScore => finalScore + 1)
                 setCombo(combo => combo + 1)
-                console.log(finalScore)
                 currentProgress += 13
                 setProgress(currentProgress)
+                currentCombo += 1
                 }  
             }else{
                 setCombo(0)
+                currentCombo = 0
             }
         }
 
@@ -130,8 +164,9 @@ function Mechanics(props) {
             <div className="comboAdjust"></div>
             <div className="alinharv">
                 <h1>Contador:</h1>
+                
                 <div className={isActive ? " glow counter mb-4 mt-4 " : "counter mb-4 mt-4"}>
-                    <p>{character }{isMultiplier ? <span className="text-primary text-left text-nowrap">{" x" + multiplier}</span> : ""}</p>
+                    <p ref={scoreRef}>{character }{isMultiplier ? <span className="text-primary text-left text-nowrap">{" x" + multiplier}</span> : ""}</p>
     
                 </div>
                 <p>Pontuação: {score}</p>
