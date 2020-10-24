@@ -6,6 +6,7 @@ o GameOver. Acertos seguidos geram combos, a cada 10 pontos de Combo é gerado p
 que da um empulso maior na barra de GameOver.
 <img src="https://github.com/abakatee/keyboardSkills/blob/master/src/img/PrtScreen.PNG">
 
-### `Ahoy`
+## Demo
+Cheque o resultado do projeto por <a src="https://trusting-mestorf-14dd24.netlify.app/">aqui</a>
 
 
