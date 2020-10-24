@@ -11,9 +11,9 @@ function Mechanics(props) {
     const [isMultiplier, setIsMultiplier] = useState(false)
     const [finalScore, setFinalScore] = useState(0)
     const [score, setScore] = useState(0)
-    const [combo,setCombo] = useState(0)
+    const [combo, setCombo] = useState(0)
     const [isActive, setIsActive] = useState(false)
-    const [progress,setProgress] = useState(100)
+    const [progress, setProgress] = useState(100)
     const finalRef = useRef(null)
     const listRef = useRef(null)
     const timerRef = useRef(null)
@@ -39,103 +39,97 @@ function Mechanics(props) {
             finalRef.current.classList.add("collapse")
             setIsActive(currentActive)
             handleGenerator()
-            listRef.current = window.addEventListener('keyup', handleVerification)
-            timerRef.current = setInterval(handleStop, 50)
-            
+            listRef.current = window.addEventListener('keydown', handleVerification)
+            timerRef.current = setInterval(handleProgress, 47)
+
         }
     }
-    function handleGenerator(yes = false){
+    function handleGenerator() {
         let num = currentCombo
         num = num.toString()
-        if(parseInt(num[num.length-1])  === 9){
+        if (parseInt(num[num.length - 1]) === 0 && num.length !== 1) {
             console.log('aqui')
             currentChar = 'Space'
             setCharacter(currentChar)
             return
         }
 
-
         currentChar = all[Math.floor(Math.random() * all.length)]
         setCharacter(currentChar)
+
+        handleMultiplier()
+    }
+
+    function handleMultiplier() {
         let n = Math.floor(Math.random() * 6)
-        if(n === 5 ){
+        if (n === 5) {
             currentMultiplier = true
-            currentMultiplierNum = Math.floor(Math.random() * 7 +3)
+            currentMultiplierNum = Math.floor(Math.random() * 7 + 3)
 
             setMultiplier(currentMultiplierNum)
             setIsMultiplier(currentMultiplier)
-            console.log('multiplayer' + isMultiplier)
         }
-        
     }
-   
+
+
+    function handleScore(plus){
+        currentProgress += plus
+        setProgress(currentProgress)
+        if(plus !== -10){
+        setScore(score => score + 1)
+        setFinalScore(finalScore => finalScore + 1)
+        setCombo(combo => combo + 1)
+        currentCombo += 1
+        handleGenerator()}
+    }
 
     function handleVerification(event) {
-         
 
-        if(currentActive === true){
-         if(currentChar === 'Space' && event.key === " " ){
-           
-            setScore(score => score + 1)
-            setFinalScore(finalScore => finalScore + 1)
-            setCombo(combo => combo + 1)
-            currentCombo += 1
-            console.log(combo)
-            console.log(finalScore)
-            currentProgress += 23
-            setProgress(currentProgress)
-            handleGenerator(true)
-            return
-         }else if(currentChar === 'Space'){
-             setCombo(0)
-             currentCombo = 0
-             return
-         }
-             
-            
-
+        if (currentActive === true) {
+            if (currentChar === 'Space' && event.key === " ") {
+                handleScore(23)
+                return
+            } else if (currentChar === 'Space') {
+                setCombo(0)
+                currentCombo = 0
+                handleScore(-10)
+                return
+            }
 
             if (event.key.toUpperCase() === currentChar) {
-                if(currentMultiplier){
+                if (currentMultiplier) {
                     console.log('chegou')
                     currentMultiplierNum -= 1
                     setMultiplier(currentMultiplierNum)
                     currentProgress += 5
                     setProgress(currentProgress)
-                    if(currentMultiplierNum === 0){
-                        console.log('chegou no 0')
+                    if (currentMultiplierNum === 0) {
                         currentMultiplier = false
                         setIsMultiplier(currentMultiplier)
-                        setCombo(combo => combo + 1)
-                        currentCombo += 1
-                        setScore(score => score + 1)
-                        setFinalScore(finalScore => finalScore + 1)
-                        handleGenerator()
+                        handleScore(4)
 
-                        
                     }
-                }else{
-                handleGenerator()
-                setScore(score => score + 1)
-                setFinalScore(finalScore => finalScore + 1)
-                setCombo(combo => combo + 1)
-                currentProgress += 13
-                setProgress(currentProgress)
-                currentCombo += 1
-                }  
-            }else{
+                } else {
+                    handleScore(11)
+                }
+            } else {
+                handleScore(-10)
                 setCombo(0)
                 currentCombo = 0
             }
         }
 
-      
+
     }
-    function handleStop(){
+    function handleProgress(){
         currentProgress -= 1
         setProgress(currentProgress)
-        
-        if(currentProgress <= 0 ){
+        if (currentProgress <= 0) {
+            gameOver()   
+        }
+    }
+
+    function gameOver() {
             currentActive = false
             setIsActive(currentActive)
             console.log('acabou')
@@ -148,47 +142,46 @@ function Mechanics(props) {
             setScore(0)
             setCombo(0)
             finalRef.current.classList.remove("collapse")
-            
-        }
+
     }
 
 
 
     return (
         <>
-        <Effects nameClass="main" currentCombo={combo}></Effects>
-        <div className="container text-center">
-       
-            <h1 className="display-3">Keyboard Skills</h1>
-            <div className="d-flex justify-content-center ">
-            <div className="comboAdjust"></div>
-            <div className="alinharv">
-                <h1>Contador:</h1>
-                
-                <div className={isActive ? " glow counter mb-4 mt-4 " : "counter mb-4 mt-4"}>
-                    <p ref={scoreRef}>{character }{isMultiplier ? <span className="text-primary text-left text-nowrap">{" x" + multiplier}</span> : ""}</p>
-    
+            <Effects nameClass="main" currentCombo={combo}></Effects>
+            <div className="container text-center">
+
+                <h1 className="display-3">Keyboard Skills</h1>
+                <div className="d-flex justify-content-center ">
+                    <div className="comboAdjust"></div>
+                    <div className="alinharv">
+                        <h1>Contador:</h1>
+
+                        <div className={isActive ? " glow counter mb-4 mt-4 " : "counter mb-4 mt-4"}>
+                            <p ref={scoreRef}>{character}{isMultiplier ? <span className="text-primary text-left text-nowrap">{" x" + multiplier}</span> : ""}</p>
+
+                        </div>
+                        <p>Pontuação: {score}</p>
+                        <button className={isActive ? "btn btn-primary" : "btn btn-success"} onClick={handleStart}>{isActive ? <span className="spinner-border"></span> : "Iniciar"}</button>
+                    </div>
+                    <div className="combo">
+                        <p className="">{combo}</p>
+                    </div>
                 </div>
-                <p>Pontuação: {score}</p>
-                <button className={isActive ? "btn btn-primary" : "btn btn-success"} onClick={handleStart }>{isActive ? <span className="spinner-border"></span>  : "Iniciar"}</button>
-            </div>
-            <div className="combo">
-            <p className="">{combo}</p>
-            </div>
-            </div>
-            <div className="progress mt-4 mx-auto">
-                    <div className="progress-bar" role="progressbar" 
-                        aria-valuemin="0" aria-valuemax="100" style={{width:progress+"%"}}>
+                <div className="progress mt-4 mx-auto">
+                    <div className="progress-bar" role="progressbar"
+                        aria-valuemin="0" aria-valuemax="100" style={{ width: progress + "%" }}>
                         <span className="sr-only">70% Complete</span>
                     </div>
                 </div>
                 <h2 ref={finalRef} className={"mt-4 collapse"}>Sua pontuação final foi :{finalScore}</h2>
-             
-        </div>
-        <div className="bg"></div>
-        <Effects nameClass="mainRight" currentCombo={combo}></Effects>
+
+            </div>
+            <div className="bg"></div>
+            <Effects nameClass="mainRight" currentCombo={combo}></Effects>
         </>
-        
+
     );
 }
 
