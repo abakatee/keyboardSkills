@@ -14,6 +14,7 @@ function Mechanics(props) {
     const [combo, setCombo] = useState(0)
     const [isActive, setIsActive] = useState(false)
     const [progress, setProgress] = useState(100)
+    const [particles,SetParticles] = useState(true)
     const finalRef = useRef(null)
     const listRef = useRef(null)
     const timerRef = useRef(null)
@@ -144,42 +145,49 @@ function Mechanics(props) {
             finalRef.current.classList.remove("collapse")
 
     }
+    function handleParticles(){
+        SetParticles(particles => particles = !particles)
+    }
 
 
 
     return (
         <>
-            <Effects nameClass="main" currentCombo={combo}></Effects>
+           {particles ? <Effects nameClass="main" currentCombo={combo}></Effects> : null}
             <div className="container text-center">
 
                 <h1 className="display-3">Keyboard Skills</h1>
                 <div className="d-flex justify-content-center ">
                     <div className="comboAdjust"></div>
                     <div className="alinharv">
-                        <h1>Contador:</h1>
+                        <h1>Counter:</h1>
 
                         <div className={isActive ? " glow counter mb-4 mt-4 " : "counter mb-4 mt-4"}>
                             <p ref={scoreRef}>{character}{isMultiplier ? <span className="text-primary text-left text-nowrap">{" x" + multiplier}</span> : ""}</p>
 
                         </div>
-                        <p>Pontuação: {score}</p>
-                        <button className={isActive ? "btn btn-primary" : "btn btn-success"} onClick={handleStart}>{isActive ? <span className="spinner-border"></span> : "Iniciar"}</button>
+                        <p>Score: {score}</p>
+                        <button className={isActive ? "btn btn-primary" : "btn btn-success"} onClick={handleStart}>{isActive ? <span className="spinner-border"></span> : "Start"}</button>
                     </div>
                     <div className="combo">
                         <p className="">{combo}</p>
                     </div>
                 </div>
-                <div className="progress mt-4 mx-auto">
+                <div className="progress mt-4 mx-auto mb-2">
                     <div className="progress-bar" role="progressbar"
                         aria-valuemin="0" aria-valuemax="100" style={{ width: progress + "%" }}>
                         <span className="sr-only">70% Complete</span>
                     </div>
                 </div>
-                <h2 ref={finalRef} className={"mt-4 collapse"}>Sua pontuação final foi :{finalScore}</h2>
-
+                <h2 ref={finalRef} className={"mt-4 collapse"}>Your final score was :{finalScore}</h2>
+                <p>Stop Particles:</p>
+                    <label className="switch">
+                        <input type="checkbox" onClick={handleParticles}></input>
+                        <span className="slider round"></span>
+                    </label>
             </div>
             <div className="bg"></div>
-            <Effects nameClass="mainRight" currentCombo={combo}></Effects>
+            {particles ? <Effects nameClass="mainRight" currentCombo={combo}></Effects> : null}
         </>
 
     );

@@ -59,8 +59,10 @@ function handlerColor(){
 
 function eraseDrop(id){
    let drop = document.getElementById(id)
-
-    drop.remove()
+    if(drop !== null){
+        drop.remove()
+    }
+  
 }
     useEffect(()=>{
         setInterval(() => {

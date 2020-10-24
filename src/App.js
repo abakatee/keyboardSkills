@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+/*import React, {useRef, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 
@@ -43,4 +43,4 @@ function Counter(props) {
   );
 }
 
-export default Counter;
+export default Counter;*/
