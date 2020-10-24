@@ -7,6 +7,6 @@ que da um empulso maior na barra de GameOver.
 <img src="https://github.com/abakatee/keyboardSkills/blob/master/src/img/PrtScreen.PNG">
 
 ## Demo
-Cheque o resultado do projeto por <a src="https://trusting-mestorf-14dd24.netlify.app/">aqui</a>
+Cheque o resultado do projeto por <a href="https://trusting-mestorf-14dd24.netlify.app/">aqui</a>
 
 
