@@ -1,6 +1,4 @@
 import React, { useRef, useState } from 'react';
-import './index.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import Effects from './particles'
 
 
@@ -186,7 +184,7 @@ function Mechanics(props) {
                         <span className="slider round"></span>
                     </label>
             </div>
-            <div className="bg"></div>
+            
             {particles ? <Effects nameClass="mainRight" currentCombo={combo}></Effects> : null}
         </>
 

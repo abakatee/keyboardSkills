@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Mechanics from './mechanics'
-
+import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Mechanics></Mechanics>
+    <App></App>
   </React.StrictMode>,
   document.getElementById('root')
 );

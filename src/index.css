@@ -1,14 +1,13 @@
 body, html{
     background: #181717	;
     color: #ffffff;
-    z-index: -20;
     font-family: 'Roboto Mono', monospace;
 }
 .conteiner{
     height: 100%;
     position: relative;
 
-    z-index: -10;
+
 }
 
 
